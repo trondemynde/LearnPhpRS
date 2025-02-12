@@ -14,7 +14,6 @@
         }
     ],
     "require": {
-        "symfony/var-dumper": "^7.1",
-        "illuminate/database": "^11.42"
+        "symfony/var-dumper": "^7.1"
     }
 }

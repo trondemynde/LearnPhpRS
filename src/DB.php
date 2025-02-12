@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Models\Post;
 use PDO;
 use PDOException;
 
@@ -25,59 +24,61 @@ class DB
     {
         $stmt = $this->conn->prepare("SELECT * FROM $table");
         $stmt->execute();
-        // set the resulting array to associative
         $stmt->setFetchMode(PDO::FETCH_CLASS, $class);
         return $stmt->fetchAll();
     }
 
     public function find($table, $class, $id)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE id=$id");
-        $stmt->execute();
-        // set the resulting array to associative
+        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE id=:id");
+        $stmt->execute(['id' => $id]);
         $stmt->setFetchMode(PDO::FETCH_CLASS, $class);
         return $stmt->fetch();
     }
 
     public function where($table, $class, $field, $value)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE $field='$value'");
-        $stmt->execute();
-        // set the resulting array to associative
+        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE $field=:value");
+        $stmt->execute(['value' => $value]);
         $stmt->setFetchMode(PDO::FETCH_CLASS, $class);
         return $stmt->fetchAll();
     }
 
     public function insert($table, $fields)
     {
-
         $fieldNames = array_keys($fields);
         $fieldNamesText = implode(', ', $fieldNames);
-        $fieldValuesText = implode("', '", $fields);
+        $fieldValuesText = ':' . implode(', :', $fieldNames);
 
-        $sql = "INSERT INTO $table ($fieldNamesText)
-        VALUES ('$fieldValuesText')";
-        // use exec() because no results are returned
-        $this->conn->exec($sql);
+        $sql = "INSERT INTO $table ($fieldNamesText) VALUES ($fieldValuesText)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($fields);
     }
+
     public function update($table, $fields, $id)
     {
         $updateFieldsText = '';
-        foreach($fields as $key=>$value){
-            $updateFieldsText .= "$key='$value', ";
+        foreach ($fields as $key => $value) {
+            $updateFieldsText .= "$key=:$key, ";
         }
-        $updateFieldsText = substr($updateFieldsText,0,-2);
-        $sql = "UPDATE $table SET $updateFieldsText WHERE id=$id";
-        // Prepare statement
+        $updateFieldsText = rtrim($updateFieldsText, ', ');
+        $sql = "UPDATE $table SET $updateFieldsText WHERE id=:id";
         $stmt = $this->conn->prepare($sql);
-
-        // execute the query
-        $stmt->execute();
+        $fields['id'] = $id;
+        $stmt->execute($fields);
     }
-    public function delete($table, $id){
-        $sql = "DELETE FROM $table WHERE id=$id";
 
-        // use exec() because no results are returned
-        $this->conn->exec($sql);
+    public function delete($table, $id)
+    {
+        $sql = "DELETE FROM $table WHERE id=:id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+    }
+
+    public function deleteByEmail($table, $email)
+    {
+        $sql = "DELETE FROM $table WHERE email=:email";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['email' => $email]);
     }
 }

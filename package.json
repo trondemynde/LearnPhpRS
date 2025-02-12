@@ -1,0 +1,32 @@
+{
+  "name": "ta22elearnphp",
+  "version": "1.0.0",
+  "description": "1. run \"npm install\" 2. run \"composer install\" 3. run in public \"php -S localhost:8000\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./public/styles.css -o ./public/output.css",
+    "watch:css": "tailwindcss -i ./public/styles.css -o ./public/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trondemynde/LearnPhpRS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/trondemynde/LearnPhpRS/issues"
+  },
+  "homepage": "https://github.com/trondemynde/LearnPhpRS#readme",
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.0.6",
+    "daisyui": "^4.12.23"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^3.4.17"
+  }
+}

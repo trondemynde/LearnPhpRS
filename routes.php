@@ -25,3 +25,10 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/login', [AuthController::class, 'loginForm']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/profile', [AuthController::class, 'profileForm']);
+Route::post('/profile', [AuthController::class, 'updateProfile']);
+
+Route::get('/PasswordResetRequest', [AuthController::class, 'passwordResetRequestForm']);
+Route::post('/PasswordResetRequest', [AuthController::class, 'passwordResetRequest']);
+Route::get('/PasswordReset', [AuthController::class, 'passwordResetForm']);
+Route::post('/PasswordReset', [AuthController::class, 'passwordReset']);

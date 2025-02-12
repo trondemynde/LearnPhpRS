@@ -22,6 +22,8 @@
         </form>
         <p class="text-center">
             <a href="/register" class="link">Don't have an account? Register</a>
+        </p>
+        <p class="text-center">
             <a href="/PasswordResetRequest" class="link">Forgot your password?</a>
         </p>
     </div>

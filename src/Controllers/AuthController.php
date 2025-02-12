@@ -79,8 +79,19 @@ class AuthController {
             redirect('/profile');
         }
     }
+    public function deleteAccount() {
+        $userId = $_SESSION['userId'];
+        $user = User::find($userId);
 
-    // Password reset test
+        if ($user) {
+            $user->delete();
+            session_destroy();
+            redirect('/login');
+        } else {
+            redirect('/profile');
+        }
+    }
+
     public function passwordResetRequestForm(){
         view('auth/PasswordResetRequest');
     }

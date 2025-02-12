@@ -32,3 +32,4 @@ Route::get('/PasswordResetRequest', [AuthController::class, 'passwordResetReques
 Route::post('/PasswordResetRequest', [AuthController::class, 'passwordResetRequest']);
 Route::get('/PasswordReset', [AuthController::class, 'passwordResetForm']);
 Route::post('/PasswordReset', [AuthController::class, 'passwordReset']);
+route::post('/delete-account', [AuthController::class, 'deleteAccount']);

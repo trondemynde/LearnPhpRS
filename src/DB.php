@@ -20,6 +20,18 @@ class DB
         }
     }
 
+
+
+    public function query($sql)
+    {
+        return $this->conn->query($sql);
+    }
+
+    public function prepare($sql)
+    {
+        return $this->conn->prepare($sql);
+    }
+
     public function all($table, $class)
     {
         $stmt = $this->conn->prepare("SELECT * FROM $table");

@@ -7,10 +7,17 @@ use App\Models\Post;
 
 class PostsController
 {
-    public function index(){
-        $posts = Post::all();
-        view('posts/index', compact('posts'));
+    public function index() {
+        $perPage = 5;
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $totalPosts = Post::count();
+        $totalPages = ceil($totalPosts / $perPage);
+        $offset = ($currentPage - 1) * $perPage;
+
+        $posts = Post::paginate($perPage, $offset);
+        view('posts/index', compact('posts', 'currentPage', 'totalPages'));
     }
+
     public function create(){
         view('posts/create');
     }
@@ -46,4 +53,5 @@ class PostsController
         $post->delete();
         redirect('/admin/posts');
     }
+
 }

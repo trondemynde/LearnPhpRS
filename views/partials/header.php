@@ -19,6 +19,8 @@
 
   <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <script src="/assets/js/pagination.js" defer></script>
+
   <style>
     .bd-placeholder-img {
       font-size: 1.125rem;

@@ -9,14 +9,28 @@ use App\Models\User;
 class PublicController
 {
     public function index() {
-        $posts = Post::all();
-        view('index', compact('posts'));
+        $perPage = 5;
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $totalPosts = Post::count();
+        $totalPages = ceil($totalPosts / $perPage);
+        $offset = ($currentPage - 1) * $perPage;
+
+        $posts = Post::paginate($perPage, $offset);
+
+        view('index', compact('posts', 'currentPage', 'totalPages'));
     }
 
     public function us()
     {
-        $posts = Post::all();
-        view('us', compact('posts'));
+        $perPage = 5;
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $totalPosts = Post::count();
+        $totalPages = ceil($totalPosts / $perPage);
+        $offset = ($currentPage - 1) * $perPage;
+
+        $posts = Post::paginate($perPage, $offset);
+
+        view('us', compact('posts', 'currentPage', 'totalPages'));
     }
 
     public function form()

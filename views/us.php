@@ -7,7 +7,7 @@
 
   <div class="row g-5">
     <div class="col-md-8">
-      <?php view('partials/posts', compact('posts')); ?>
+    <?php view('partials/posts', compact('posts', 'currentPage', 'totalPages')); ?>
 
     </div>
 

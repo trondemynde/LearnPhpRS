@@ -1,9 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
+    function attachSeeMoreEvents() {
+        document.querySelectorAll('.see-more').forEach(button => {
+            // Clone button to remove existing event listeners
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+
+            newButton.addEventListener('click', function () {
+                const commentList = this.closest('.commentList');
+                const hiddenComments = commentList.querySelectorAll('.comment.hidden');
+
+                hiddenComments.forEach((comment, index) => {
+                    if (index < 5) {
+                        comment.classList.remove('hidden');
+                    }
+                });
+
+                if (commentList.querySelectorAll('.comment.hidden').length === 0) {
+                    this.remove();
+                }
+            });
+        });
+    }
+
     function attachCommentFormEvents() {
         document.querySelectorAll('.commentForm').forEach(form => {
-            form.addEventListener('submit', function(event) {
+            // Clone form to remove existing event listeners
+            const newForm = form.cloneNode(true);
+            form.parentNode.replaceChild(newForm, form);
+
+            newForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 const formData = new FormData(this);
+
                 fetch('/storeComment', {
                     method: 'POST',
                     body: formData
@@ -28,7 +56,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function attachPaginationEvents() {
         document.querySelectorAll('.pagination-link').forEach(link => {
-            link.addEventListener('click', function (event) {
+            // Clone link to remove existing event listeners
+            const newLink = link.cloneNode(true);
+            link.parentNode.replaceChild(newLink, link);
+
+            newLink.addEventListener('click', function (event) {
                 event.preventDefault();
                 const page = this.getAttribute('data-page');
                 fetchPage(page);
@@ -49,12 +81,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.querySelector('main').innerHTML = newContent;
                 window.history.pushState({}, '', url);
                 
+                // Rebind all event listeners after replacing content
                 attachPaginationEvents();
                 attachCommentFormEvents();
+                attachSeeMoreEvents();
             })
             .catch(error => console.error('Error fetching page:', error));
     }
 
+    // Initial bindings when the page loads
     attachPaginationEvents();
     attachCommentFormEvents();
+    attachSeeMoreEvents();
 });

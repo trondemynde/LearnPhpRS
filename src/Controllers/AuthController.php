@@ -103,7 +103,6 @@ class AuthController {
                 $token = bin2hex(random_bytes(50));
                 PasswordReset::create($user->email, $token);
 
-                // Use the correct base URL for generating the reset link
                 $resetLink = "http://localhost:8000/PasswordReset?token=$token";
                 PasswordResetMail::send($user->email, $resetLink);
 

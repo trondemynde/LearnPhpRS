@@ -33,3 +33,8 @@ Route::post('/PasswordResetRequest', [AuthController::class, 'passwordResetReque
 Route::get('/PasswordReset', [AuthController::class, 'passwordResetForm']);
 Route::post('/PasswordReset', [AuthController::class, 'passwordReset']);
 route::post('/delete-account', [AuthController::class, 'deleteAccount']);
+
+route::post('/storeComment', [PostsController::class, 'storeComment']);
+route::get('/posts/show/delete', [PostsController::class, 'destroyComment']);
+Route::get('/comments/edit', [PostsController::class, 'editComment']);
+Route::post('/comments/update', [PostsController::class, 'updateComment']);

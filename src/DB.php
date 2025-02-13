@@ -19,7 +19,10 @@ class DB
             echo "Connection failed: " . $e->getMessage();
         }
     }
-
+    public function getPdo()
+    {
+        return $this->conn;
+    }
 
 
     public function query($sql)

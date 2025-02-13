@@ -14,12 +14,17 @@
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/blog/">
 
   <link href="/output.css" rel="stylesheet">
+  <link href="/blog.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 
   <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <script src="/assets/js/pagination.js" defer></script>
+  <script src="/assets/js/comments.js" defer></script>
 
   <style>
     .bd-placeholder-img {
@@ -228,14 +233,6 @@
         <a class="nav-item nav-link link-body-emphasis" href="/us">U.S.</a>
         <a class="nav-item nav-link link-body-emphasis" href="/form">Form</a>
         <a class="nav-item nav-link link-body-emphasis" href="/admin/posts">Admin</a>
-        <a class="nav-item nav-link link-body-emphasis" href="#">Culture</a>
-        <a class="nav-item nav-link link-body-emphasis" href="#">Business</a>
-        <a class="nav-item nav-link link-body-emphasis" href="#">Politics</a>
-        <a class="nav-item nav-link link-body-emphasis" href="#">Opinion</a>
-        <a class="nav-item nav-link link-body-emphasis" href="#">Science</a>
-        <a class="nav-item nav-link link-body-emphasis" href="#">Health</a>
-        <a class="nav-item nav-link link-body-emphasis" href="#">Style</a>
-        <a class="nav-item nav-link link-body-emphasis" href="#">Travel</a>
       </nav>
     </div>
   </div>

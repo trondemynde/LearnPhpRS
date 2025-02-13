@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 
 use App\Models\Post;
+use App\Models\Comment;
+use App\DB;
+
 
 class PostsController
 {
@@ -52,6 +55,54 @@ class PostsController
         $post = Post::find($_GET['id']);
         $post->delete();
         redirect('/admin/posts');
+    }
+
+
+    //comments
+    public function storeComment()
+    {
+        try {
+            $db = new DB();
+            $db->insert('comments', [
+                'post_id' => $_POST['post_id'],
+                'body' => $_POST['body']
+            ]);
+            $lastInsertId = $db->getPdo()->lastInsertId();
+            $comment = $db->find('comments', Comment::class, $lastInsertId);
+            echo json_encode(['status' => 'success', 'comment' => $comment]);
+        } catch (\Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+    public function editComment()
+    {
+        $db = new DB();
+        $comment = $db->find('comments', Comment::class, $_GET['id']);
+        view('posts/editComment', compact('comment'));
+    }
+    
+    public function updateComment()
+    {
+        $db = new DB();
+        $db->update('comments', [
+            'body' => $_POST['body']
+        ], $_GET['id']);
+        $comment = $db->find('comments', Comment::class, $_GET['id']);
+        if ($comment) {
+            redirect('/posts/show?id=' . $comment->post_id);
+        } else {
+            echo "Comment not found.";
+        }
+    }
+
+    public function destroyComment()
+    {
+        $db = new DB();
+        $comment = $db->find('comments', Comment::class, $_GET['id']);
+        $postId = $comment->post_id;
+        $db->delete('comments', $_GET['id']);
+        redirect('/posts/show?id=' . $postId);
+
     }
 
 }

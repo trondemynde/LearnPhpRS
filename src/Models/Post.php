@@ -25,4 +25,8 @@ class Post extends Model {
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS, self::class);
     }
+    public function comments() {
+        $db = new DB();
+        return $db->where('comments', Comment::class, 'post_id', $this->id);
+    }
 }

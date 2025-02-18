@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     function attachSeeMoreEvents() {
         document.querySelectorAll('.see-more').forEach(button => {
-            // Clone button to remove existing event listeners
             const newButton = button.cloneNode(true);
             button.parentNode.replaceChild(newButton, button);
 
@@ -24,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function attachCommentFormEvents() {
         document.querySelectorAll('.commentForm').forEach(form => {
-            // Clone form to remove existing event listeners
             const newForm = form.cloneNode(true);
             form.parentNode.replaceChild(newForm, form);
 
@@ -46,6 +44,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             newComment.innerHTML = `<p>${data.comment.body}</p>`;
                             commentList.appendChild(newComment);
                             this.reset();
+
+                            localStorage.setItem('scrollPosition', window.scrollY);
+
+                            window.location.reload();
                         }
                     }
                 })
@@ -54,9 +56,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    function scrollToLastPosition() {
+        const scrollPosition = localStorage.getItem('scrollPosition');
+        if (scrollPosition) {
+            window.scrollTo(0, parseInt(scrollPosition));
+            localStorage.removeItem('scrollPosition');
+        }
+    }
+
     function attachPaginationEvents() {
         document.querySelectorAll('.pagination-link').forEach(link => {
-            // Clone link to remove existing event listeners
             const newLink = link.cloneNode(true);
             link.parentNode.replaceChild(newLink, link);
 
@@ -81,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.querySelector('main').innerHTML = newContent;
                 window.history.pushState({}, '', url);
                 
-                // Rebind all event listeners after replacing content
+
                 attachPaginationEvents();
                 attachCommentFormEvents();
                 attachSeeMoreEvents();
@@ -89,8 +98,9 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(error => console.error('Error fetching page:', error));
     }
 
-    // Initial bindings when the page loads
+
     attachPaginationEvents();
     attachCommentFormEvents();
     attachSeeMoreEvents();
+    scrollToLastPosition();
 });

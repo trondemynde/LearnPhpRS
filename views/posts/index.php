@@ -1,6 +1,6 @@
 <?php view('partials/header'); ?>
 
-<main class="container mx-auto p-4">
+<main class="container mx-auto p-4 min-h-screen">
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-3xl font-bold">Posts</h1>
         <a class="btn btn-primary btn-sm flex items-center justify-center transition duration-300 ease-in-out transform hover:scale-105" href="/admin/posts/create">New Post</a>

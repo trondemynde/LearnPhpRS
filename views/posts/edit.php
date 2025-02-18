@@ -1,6 +1,6 @@
 <?php view('partials/header'); ?>
 
-<main class="container">
+<main class="container min-h-screen">
     <form action="/admin/posts/edit?id=<?=$post->id?>" method="POST">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
